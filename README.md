@@ -1,36 +1,129 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📈 Dynamic Financial Portfolio Dashboard
 
-## Getting Started
+A modern, high-performance financial portfolio dashboard built with **Next.js 16**, **React 19**, **TypeScript**, **Tailwind CSS**, and **TanStack Table**. It tracks live NSE/BSE stock prices and delivers over 30+ financial metrics and fundamental analysis indicators with real-time updates and sector grouping.
 
-First, run the development server:
+![Dashboard Preview](https://raw.githubusercontent.com/Satwik290/Dynamic-Financial-Portfolio-Dashboard/main/public/preview.png) *(Optional preview image)*
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## ✨ Features
+
+- **⚡ Real-Time Market Price (CMP)**: Automatically polls live prices from financial data providers with 15-second intervals and fallback caching.
+- **📊 Comprehensive 30+ Financial Metrics**:
+  - **Valuation & Holdings**: Particulars, Ticker, Avg. Cost, Qty, Total Investment, Portfolio Weight (%), CMP, Present Value, Unrealized Gain/Loss (₹ and %).
+  - **Valuation Ratios**: P/E (TTM), Price-to-Sales (P/S), Price-to-Book (P/B), Book Value, Market Cap.
+  - **Profitability & Margins**: Revenue (TTM), EBITDA (TTM), EBITDA Margin (%), PAT, PAT Margin (%).
+  - **Cash Flow & Solvency**: Operating Cash Flow (CFO Mar 24), 5-Year CFO, 5-Year Free Cash Flow (FCF), Debt to Equity, CFO-to-EBITDA, CFO-to-PAT.
+  - **Growth Rates & Momentum**: Revenue Growth, EBITDA Growth, Profit Growth, Market Cap Growth, Stage-2 momentum classification.
+- **📁 Sector Grouping & Aggregated Summaries**:
+  - Assets organized hierarchically by industry sectors (Financial, Tech, Consumer, Power, Pipe, etc.).
+  - Collapsible/expandable sector accordions with live aggregated Sector Investment, Sector Present Value, and Sector Gain/Loss.
+- **📌 Responsive Sticky Table**: Smooth horizontal scrolling with a fixed/sticky "Particulars" column for seamless navigation across wide financial datasets.
+- **🛡️ Robust Fallback & Resilience**: Seamlessly falls back to benchmark and seed metrics if external market APIs encounter rate limits or connection timeouts.
+- **💎 Sleek Dark Mode Aesthetics**: Glassmorphism cards, pulsating live status indicators, vibrant financial green/red metrics, and smooth transitions.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router & Turbopack)
+- **UI & Components**: [React 19](https://react.dev/), [Lucide React](https://lucide.dev/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Data Grid / Table**: [TanStack Table v8](https://tanstack.com/table)
+- **Market Data & Scraper**: [yahoo-finance2](https://github.com/gadicc/node-yahoo-finance2), [Cheerio](https://cheerio.js.org/)
+- **Deployment**: Netlify & Vercel ready
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18.18.0 or later recommended)
+- [npm](https://www.npmjs.com/) / [yarn](https://yarnpkg.com/) / [pnpm](https://pnpm.io/)
+
+### Installation
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/Satwik290/Dynamic-Financial-Portfolio-Dashboard.git
+   cd Dynamic-Financial-Portfolio-Dashboard
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
+
+4. **Open in browser**:
+   Navigate to [http://localhost:3000](http://localhost:3000) to view the live dashboard.
+
+---
+
+## 📁 Project Structure
+
+```text
+├── netlify.toml                # Netlify deployment configuration
+├── package.json
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   └── portfolio/
+│   │   │       └── route.ts    # Real-time portfolio price & fundamentals endpoint
+│   │   ├── layout.tsx          # Root layout & global styles
+│   │   └── page.tsx            # Main dashboard overview page
+│   ├── components/
+│   │   ├── DashboardMetrics.tsx # Top-level KPI overview cards
+│   │   └── PortfolioTable.tsx  # Dynamic grouped table with 30+ metrics
+│   └── data/
+│       ├── portfolioData.ts    # Model definitions & dataset processor
+│       └── rawPortfolio.json   # Seed portfolio holding and fundamentals data
+└── tsconfig.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🌐 Deploying to Netlify (Free Hosting)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project includes a pre-configured `netlify.toml` file with Next.js App Router support:
 
-## Learn More
+### Option A: Deploy with Git (Recommended)
 
-To learn more about Next.js, take a look at the following resources:
+1. Push your code to GitHub:
+   ```bash
+   git init
+   git add .
+   git commit -m "feat: initial commit with complete portfolio dashboard"
+   git branch -M main
+   git remote add origin https://github.com/<YOUR_USERNAME>/<REPO_NAME>.git
+   git push -u origin main
+   ```
+2. Go to [Netlify](https://app.netlify.com/) and click **"Add new site"** > **"Import an existing project"**.
+3. Select **GitHub** and choose your repository.
+4. Netlify will auto-detect the build settings from `netlify.toml`:
+   - **Build command**: `npm run build`
+   - **Publish directory**: `.next`
+5. Click **"Deploy site"**!
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Option B: Deploy with Netlify CLI
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# Install Netlify CLI globally
+npm install -g netlify-cli
 
-## Deploy on Vercel
+# Authenticate & deploy
+netlify login
+netlify init
+netlify deploy --prod
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 License
+
+This project is open-source and available under the [MIT License](LICENSE).
